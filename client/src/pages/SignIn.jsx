@@ -3,6 +3,7 @@ import { Link,useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch,useSelector } from 'react-redux';
 import {signInStart,signInSuccess,signInFailure} from '../redux/user/userSlice';
+import GoogleAuth from './component/GoogleAuth';
 
 const SignIn = () => {
 
@@ -51,6 +52,7 @@ const SignIn = () => {
         <button disabled={loading} className='bg-slate-700 text-white p-3 font-bold rounded-lg uppercase hover:opacity-80 disabled:opacity-80' >
          {loading ? "loading...":'Sign In'}
         </button>
+        <GoogleAuth/>
       </form>
 
       <div className='flex gp-2 mt-5'>

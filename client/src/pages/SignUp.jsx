@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link,useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import GoogleAuth from './component/GoogleAuth';
 
 const SignUp = () => {
 
@@ -53,6 +54,7 @@ const SignUp = () => {
         <button disabled={loading} className='bg-slate-700 text-white p-3 font-bold rounded-lg uppercase hover:opacity-80 disabled:opacity-80' >
          {loading ? "loading...":'Sign up'}
         </button>
+        <GoogleAuth/>
       </form>
 
       <div className='flex gp-2 mt-5'>
