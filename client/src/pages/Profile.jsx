@@ -10,9 +10,8 @@ const Profile = () => {
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState(false);
   const [formData, setFormData] = useState({});
-  console.log(formData);
-  console.log(progress);
-  console.log(error);
+
+
 
   useEffect(()=>{
     if(file){
