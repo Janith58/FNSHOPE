@@ -15,7 +15,6 @@ const SignIn = () => {
   const handlChange=(e)=>{
     setFormData({...formaData, [e.target.id]: e.target.value});
   }
-  console.log(formaData);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,7 +28,6 @@ const SignIn = () => {
           body: JSON.stringify(formaData),
       });
           const data = await response.json();
-          console.log(data);
           if(data.success === false){
            dispatch(signInFailure(data.message))
             return
