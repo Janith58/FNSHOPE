@@ -13,6 +13,7 @@ import { updateUserStart,
         signoutUserSuccess, 
       } from '../redux/user/userSlice.js';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 
 const Profile = () => {
@@ -164,6 +165,9 @@ const Profile = () => {
         text-white font-bold p-3 px-4 rounded-lg'>
         {loading? 'loading' :'upadate'}
         </button>
+        <Link className='bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-85' to={"/create_listing"}>
+        Create Listing
+        </Link>
 
       </form>
       <div className='flex justify-between mt-5'>
