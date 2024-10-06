@@ -27,6 +27,12 @@ const Header = () => {
         <Link to='about'>
         <li className='hidden sm:inline text-slate-1000 hover:underline'>About</li>
         </Link>
+        <Link to='create_listing'>
+        {currentUser? (
+          <li className='hidden sm:inline text-slate-1000 hover:underline'>listing</li>
+        ):''}
+        
+        </Link>
         <Link to='profile'>
         {currentUser ? (
           <img className='rounded-full h-7 w-7 object-cover' src={currentUser.avatar} alt='profile'/>
