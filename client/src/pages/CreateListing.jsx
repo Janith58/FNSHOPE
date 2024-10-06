@@ -2,14 +2,27 @@ import { useState } from "react";
 import {getDownloadURL, getStorage} from 'firebase/storage';
 import {app} from '../firebase';
 import { ref, uploadBytesResumable } from 'firebase/storage';
+import {useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom'
 
 
 const CreateListing = () => {
+  const {currentUser}=useSelector(state=>state.user)
   const [files,setFiles]=useState([]);
-  const [formData,setFormData]=useState({imageUrls:[]});
+  const navigate =useNavigate()
+  const [formData,setFormData]=useState({
+    imageUrls:[],
+    name :'',
+    description :'',
+    price: '',
+    quintity:'',
+  });
+
   const [imageUploadError,setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
-  console.log(formData);
+  const [error,setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+ 
 
   const handleImageSubmite =()=>{
     if(files.length > 0 && files.length+formData.imageUrls.length < 7){
@@ -34,6 +47,7 @@ const CreateListing = () => {
       setUploading(false);
     }
   }
+  
 
   const storeImage = async (file) => {
     return new Promise((resolve,reject) => {
@@ -64,15 +78,51 @@ const CreateListing = () => {
     })
   }
 
+  const handleChange = (e) =>{
+    setFormData({
+      ...formData,
+      [e.target.id]:e.target.value
+      
+    })
+  }
+  console.log(formData);
+  const handleSubmit = async (e)=>{
+    e.preventDefault();
+    try {
+      if(formData.imageUrls.length === 0) return setError('you must upload at least one image')
+      setLoading(true);
+      setError(false);
+      const res= await fetch('/api/listing/create',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+        },
+        body:JSON.stringify({
+          ...formData,
+          userRef:currentUser._id,
+        }),
+      });
+      const data = await res.json();
+      setLoading(false)
+      if(data.success===false){
+        setError(data.messege);
+        }
+        navigate(`/listing/${data._id}`)
+    } catch (error) {
+      setError(error.messege);
+      setLoading(false)
+    }
+  }
+
   return (
     <main className='p-3 max-w-4xl mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>Create a new listing</h1>
-      <form className="flex flex-col sm:flex-row gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
         <div className='flex flex-col gap-4 flex-1 '>
-          <input type='text' placeholder='Name' className='border p-3 rounded-lg' id='name' required/>
-          <textarea type='text' placeholder='Description' className='border p-3 rounded-lg' id='description' required/>
-          <input type='number' placeholder='price' className='border p-3 rounded-lg' id='price' required/>
-          <input type='number' placeholder='Count in stock' className='border p-3 rounded-lg' id='quintity' required/>
+          <input onChange={handleChange} value={formData.name} type='text' placeholder='Name' className='border p-3 rounded-lg' id='name' required/>
+          <textarea onChange={handleChange} value={formData.description} type='text' placeholder='Description' className='border p-3 rounded-lg' id='description' required/>
+          <input onChange={handleChange} value={formData.price} type='number' placeholder='price' className='border p-3 rounded-lg' id='price' required/>
+          <input onChange={handleChange} value={formData.quintity} type='number' placeholder='Count in stock' className='border p-3 rounded-lg' id='quintity' required/>
         </div>
         <div className='flex flex-col flex-1 gap-4'>
           <p className='font-semibold'>Images:
@@ -99,7 +149,10 @@ const CreateListing = () => {
             ))
           }
 
-          <button className='p-3 bg-green-700 text-white rounded-lg uppercase hover:opacity-85 disabled:opacity-80'>Create listing</button>
+          <button disabled={loading||uploading} className='p-3 bg-green-700 text-white rounded-lg uppercase hover:opacity-85 disabled:opacity-80'>
+            {loading ? 'Creating...':'Create listing'}
+          </button>
+          {error && <p className="text-red-700 text-sm">{error}</p>}
         </div> 
       </form>
     </main>
