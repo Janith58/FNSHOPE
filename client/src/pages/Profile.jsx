@@ -27,7 +27,6 @@ const Profile = () => {
   const [updateSuccess,setUpdateSuccess] = useState(false);
   const [showLIstingError, setShowLIstingError] = useState(false);
   const [userListing, setUserListing] = useState([]);
-  console.log(formData);
 
 
   useEffect(()=>{
@@ -128,6 +127,21 @@ const Profile = () => {
       setShowLIstingError(true)
     }
   }
+  const handleListingImage = async(listingId) => {
+    try {
+      const res = await fetch(`/api/listing/delete/${listingId}`,{
+        method:'DELETE',
+      });
+      const data = await res.json();
+      if(data.success===false){
+        console.log(data.message);
+        return
+      }
+      setUserListing((prev => prev.filter((listing)=>listing._id !==listingId)))
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 
   return (
@@ -208,7 +222,7 @@ const Profile = () => {
           <p >{listing.name}</p>
         </Link>
         <div className='flex flex-col items-center'>
-          <button className='text-red-700 uppercase font-semibold'>delete</button>
+          <button onClick={()=>handleListingImage(listing._id)} className='text-red-700 uppercase font-semibold'>delete</button>
           <button className='text-green-700 uppercase font-semibold'>edite</button>
         </div>
       </div>

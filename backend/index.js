@@ -25,6 +25,7 @@ app.use('/api/auth',authRouter);
 app.use('/api/listing',listingRouter);
 
 
+
 app.use((err,req,res,next)=>{
     const statuscode= err.statuscode || 500;
     const message=err.message || 'internal saerver error';

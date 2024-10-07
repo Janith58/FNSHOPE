@@ -19,7 +19,8 @@ export const updateUser = async (req,res,next) => {
             username:req.body.username,
             email:req.body.email,
             password:req.body.password,
-            avatar:req.body.avatar
+            avatar:req.body.avatar,
+            isAdmin:req.body.isAdmin
         }
     },{new:true})
     const {password, ...rest} =updateUser._doc;
@@ -42,10 +43,16 @@ export const deleteUser = async (req,res,next) => {
 }
 
 export const getUserListing = async (req,res,next) => {
-    if (req.user.id === req.params.id) {
+    if (req.user.isAdmin) {
+          
+            const listing = await Listing.find();
+            return res.status(200).json(listing);
+    } 
+
+    if (req.user.id === req.params.id ) {
         try {
             const listing = await Listing.find({userRef:req.params.id});
-            res.status(200).json(listing);
+            return res.status(200).json(listing);
 
         } catch (error) {
             next(error);
