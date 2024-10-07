@@ -25,6 +25,8 @@ const Profile = () => {
   const [formData, setFormData] = useState({});
   const dispatch = useDispatch();
   const [updateSuccess,setUpdateSuccess] = useState(false);
+  const [showLIstingError, setShowLIstingError] = useState(false);
+  const [userListing, setUserListing] = useState([]);
   console.log(formData);
 
 
@@ -112,6 +114,20 @@ const Profile = () => {
     dispatch(signoutUserFailure(error.message));
    }
   }
+  const handleShowListing = async () =>{
+    try {
+      setShowLIstingError(false);
+      const res = await fetch(`/api/user/listing/${currentUser._id}`);
+      const data = await res.json();
+      if(data.success===false){
+        setShowLIstingError(true);
+        return
+       }
+       setUserListing(data);
+    } catch (error) {
+      setShowLIstingError(true)
+    }
+  }
 
 
   return (
@@ -176,6 +192,29 @@ const Profile = () => {
       </div>
       <p className='text-red-700 mt-5'>{error ? error : ''}</p>
       <p className='text-green-700 mt-5'>{updateSuccess? 'User is updated successfully':''}</p>
+      <button onClick={handleShowListing} className='text-green-700 w-full font-semibold'>Show listing</button>
+    <p className='text-red-700 mt-5'>{showLIstingError? 'Error show listing ': ''}</p>
+    
+    {userListing && userListing.length>0 && 
+    <div className='flex flex-col gap-4'>
+      <h1 className='text-3xl font-bold text-center mt-5'>Your Listings
+        </h1>
+    {userListing.map((listing)=>(
+      <div key={listing._id} className='border rounded-lg p-3 flex justify-between items-center gap-5'>
+        <Link to={`/listing/${listing._id}`}>
+          <img src={listing.imageUrls[0] } alt='listin cover' className='h-16 w-16 object-cover'/>
+        </Link>
+        <Link className='text-neutral-700 font-semibold flex-1 hover:underline truncate' to={`/listing/${listing._id}`}>
+          <p >{listing.name}</p>
+        </Link>
+        <div className='flex flex-col items-center'>
+          <button className='text-red-700 uppercase font-semibold'>delete</button>
+          <button className='text-green-700 uppercase font-semibold'>edite</button>
+        </div>
+      </div>
+  
+    ))}
+    </div>}
     </div>
   )
 }
