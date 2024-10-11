@@ -26,6 +26,17 @@ const listingSchema = new mongoose.Schema(
             type:String,
             required:true
         },
+        category:{
+            type:String,
+            required:true
+        },
+        brand:{
+            type:String,
+        },
+        offer:{
+            type:Boolean,
+            default:false
+        }
 
     },{timestamps:true}
 )

@@ -17,6 +17,9 @@ const CreateListing = () => {
     description :'',
     price: '',
     quintity:'',
+    category:'',
+    brand:'',
+    offer:'false'
   });
 
   const [imageUploadError,setImageUploadError] = useState(false);
@@ -93,15 +96,14 @@ const CreateListing = () => {
     })
   }
 
-  const handleChange = (e) =>{
+  const handleChange = (e) => {
+    const { id, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [e.target.id]:e.target.value
-     
-    })
-  }
+      [id]: type === 'checkbox' ? checked : value,
+    });
+  };
   const handleSubmit = async (e)=>{
-    console.log(params.listingId);
     e.preventDefault();
     try {
       if(formData.imageUrls.length === 0) return setError('you must upload at least one image')
@@ -138,6 +140,24 @@ const CreateListing = () => {
           <textarea onChange={handleChange} value={formData.description} type='text' placeholder='Description' className='border p-3 rounded-lg' id='description' required/>
           <input onChange={handleChange} value={formData.price} type='number' placeholder='price' className='border p-3 rounded-lg' id='price' required/>
           <input onChange={handleChange} value={formData.quintity} type='number' placeholder='Count in stock' className='border p-3 rounded-lg' id='quintity' required/>
+          <input onChange={handleChange} value={formData.quintity} type='number' placeholder='Count in stock' className='border p-3 rounded-lg' id='quintity' required/>
+          <input onChange={handleChange} value={formData.brand} type='text' placeholder='Brand' className='border p-3 rounded-lg' id='brand' />
+          <select
+            id="category"
+            value={formData.category}
+            onChange={handleChange}
+            className="border p-3 rounded-lg"
+          >
+            <option value="Choose a country">category</option>
+            <option value="US">United States</option>
+            <option value="CA">Canada</option>
+            <option value="FR">France</option>
+            <option value="DE">Germany</option>
+          </select>
+          <div className="flex gap-3">
+            <input type="checkbox" id="offer" className="w-5" onChange={handleChange} />
+            <span>Offer</span>
+          </div>
         </div>
         <div className='flex flex-col flex-1 gap-4'>
           <p className='font-semibold'>Images:
