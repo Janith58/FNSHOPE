@@ -9,7 +9,6 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation(); 
 
-  
   const handleSubmit = (e) => {
     e.preventDefault();
     const urlParams = new URLSearchParams(location.search);
@@ -18,7 +17,6 @@ const Header = () => {
     navigate(`/search?${searchQuery}`); 
   };
 
-  
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const searchTerm = urlParams.get('searchTerm'); 
@@ -28,43 +26,66 @@ const Header = () => {
   }, [location.search]); 
 
   return (
-    <header className='bg-slate-500 shadow-md'>
-      <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
+    <header className='bg-slate-700 shadow-lg'>
+      <div className='flex justify-between items-center max-w-7xl mx-auto px-4 py-3'>
+        {/* Brand Logo */}
         <Link to='/'>
-          <h1 className='font-bold text-sm sm:text-xl flex flex-wrap'>
-            <span className='text-slate-900'>FN</span>
-            <span className='text-slate-900'>SHOPE</span>
+          <h1 className='font-bold text-xl flex flex-wrap'>
+            <span className='text-white'>FN</span>
+            <span className='text-green-500'>SHOPE</span>
           </h1>
         </Link>
-        <form onSubmit={handleSubmit} className='bg-slate-100 p-3 rounded-lg flex items-center'>
+
+        {/* Search Bar */}
+        <form 
+          onSubmit={handleSubmit} 
+          className='bg-white p-2 rounded-full flex items-center shadow-sm border border-gray-300'
+        >
           <input
             onChange={(e) => setSearchTerms(e.target.value)}
             value={searchTerms}
             type="search"
             placeholder="Search..."
-            className='bg-transparent focus:outline-none w-24 sm:w-64'
+            className='bg-transparent px-2 w-32 sm:w-64 focus:outline-none text-gray-700'
           />
-          <button type="submit">
-            <FaSearch className='text-slate-600' />
+          <button 
+            type="submit"
+            className="flex justify-center items-center bg-green-600 text-white p-2 rounded-full hover:bg-green-500 transition duration-300"
+          >
+            <FaSearch />
           </button>
         </form>
-        <ul className='flex gap-4'>
+
+        {/* Navigation Links */}
+        <ul className='flex gap-4 items-center'>
           <Link to='/'>
-            <li className='hidden sm:inline text-slate-1000 hover:underline'>Home</li>
+            <li className='hidden sm:inline text-white hover:text-green-400 transition duration-300'>
+              Home
+            </li>
           </Link>
           <Link to='/about'>
-            <li className='hidden sm:inline text-slate-1000 hover:underline'>About</li>
+            <li className='hidden sm:inline text-white hover:text-green-400 transition duration-300'>
+              About
+            </li>
           </Link>
           <Link to='/create_listing'>
             {currentUser && (
-              <li className='hidden sm:inline text-slate-1000 hover:underline'>Listing</li>
+              <li className='hidden sm:inline text-white hover:text-green-400 transition duration-300'>
+                Listing
+              </li>
             )}
           </Link>
           <Link to='/profile'>
             {currentUser ? (
-              <img className='rounded-full h-7 w-7 object-cover' src={currentUser.avatar} alt='profile' />
+              <img 
+                className='rounded-full h-9 w-9 object-cover border-2 border-green-500'
+                src={currentUser.avatar} 
+                alt='profile' 
+              />
             ) : (
-              <li className='hidden sm:inline text-slate-1000 hover:underline'>Sign in</li>
+              <li className='hidden sm:inline text-white hover:text-green-500 transition duration-300'>
+                Sign in
+              </li>
             )}
           </Link>
         </ul>

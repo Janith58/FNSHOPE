@@ -8,7 +8,7 @@ import 'swiper/css/bundle';
 const Listing = () => {
   SwiperCore.use([Navigation]);
   const params = useParams();
-  const [listing, setListing] = useState(null);  // Start with null to handle no data better
+  const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -34,52 +34,63 @@ const Listing = () => {
     fetchListing();
   }, [params.listing_id]);
 
+  const handleOrder = () => {
+    // Implement order functionality here
+    alert('Order functionality is not yet implemented!');
+  };
+
   return (
-    <main className='p-8 max-w-4xl mx-auto'>
-      {loading && <p className='text-center my-7 text-2xl'>Loading...</p>}
-      {error && <p className='text-center my-7 text-2xl'>Something went wrong!</p>}
+    <main className="p-8 max-w-4xl mx-auto bg-gray-50 rounded-lg shadow-md">
+      {loading && <p className="text-center my-7 text-2xl">Loading...</p>}
+      {error && <p className="text-center my-7 text-2xl">Something went wrong!</p>}
       {listing && !loading && !error && (
-        <div className='flex flex-col sm:flex-row gap-4'>
-          {/* Image section */}
-          <div className='flex flex-col flex-1 gap-4'>
-            <div className='max-w-lg mt-auto rounded-xl bg-gray-300'>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          {/* Image Section */}
+          <section className="flex flex-col">
+            <div className="rounded-xl overflow-hidden bg-gray-300 shadow-lg">
               <Swiper navigation>
-                {listing?.imageUrls?.length > 0 ? (
+                {listing.imageUrls?.length > 0 ? (
                   listing.imageUrls.map((url) => (
                     <SwiperSlide key={url}>
-                      <div className='h-[400px]' style={{
-                        background: `url(${url}) center no-repeat`,
-                        backgroundSize: 'contain',
-                      }} />
+                      <div
+                        className="h-[400px] bg-cover bg-center"
+                        style={{
+                          backgroundImage: `url(${url})`,
+                        }}
+                      />
                     </SwiperSlide>
                   ))
                 ) : (
                   <SwiperSlide>
-                    <p>No images available</p>
+                    <p className="text-center p-4">No images available</p>
                   </SwiperSlide>
                 )}
               </Swiper>
             </div>
-          </div>
+          </section>
 
-          {/* Details section */}
-          <div className='flex flex-col flex-1 gap-4'>
-            <div className='border rounded-lg p-5'>
-              <p>Price: {listing?.price ?? 'N/A'}</p>
-              <p>Name: {listing?.name ?? 'N/A'}</p>
-              <p>Quantity: {listing?.quintity ?? 'N/A'}</p>
-              <p>Description: {listing?.description ?? 'N/A'}</p>
-            </div>
-          </div>
+          {/* Details Section */}
+          <section className="border rounded-lg p-5 bg-white shadow-md">
+            <h2 className="text-2xl font-semibold mb-4">{listing.name ?? 'N/A'}</h2>
+            <p className="text-lg font-bold">Price: ${listing.price ?? 'N/A'}</p>
+            <p>Quantity: {listing.quintity ?? 'N/A'}</p>
+            <p>Description: {listing.description ?? 'N/A'}</p>
+          </section>
 
-          {/* Additional section */}
-          <div className='flex flex-col flex-1 gap-4'>
-            <p>psid sdaun madushanka</p>
-          </div>
+          {/* Order Functionality Section */}
+          <section className="flex flex-col border rounded-lg p-5 bg-white shadow-md">
+            <h3 className="text-xl font-semibold mb-4">Order This Item</h3>
+            <button
+              onClick={handleOrder}
+              className="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 transition-all duration-200"
+            >
+              Place Order
+            </button>
+          </section>
         </div>
       )}
     </main>
   );
-}
+};
 
 export default Listing;

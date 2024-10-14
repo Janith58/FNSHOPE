@@ -1,20 +1,19 @@
-import React from 'react'
-import { Link,useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useDispatch,useSelector } from 'react-redux';
-import {signInStart,signInSuccess,signInFailure} from '../redux/user/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { signInStart, signInSuccess, signInFailure } from '../redux/user/userSlice';
 import GoogleAuth from './component/GoogleAuth';
 
 const SignIn = () => {
-
-  const [formaData, setFormData] = useState({});
-  const {loading,errors}=useSelector((state)=>state.user)
+  const [formData, setFormData] = useState({});
+  const { loading, errors } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handlChange=(e)=>{
-    setFormData({...formaData, [e.target.id]: e.target.value});
-  }
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,44 +24,67 @@ const SignIn = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-          body: JSON.stringify(formaData),
+        body: JSON.stringify(formData),
       });
-          const data = await response.json();
-          if(data.success === false){
-           dispatch(signInFailure(data.message))
-            return
-          }
-      dispatch(signInSuccess(data))
+      const data = await response.json();
+      if (data.success === false) {
+        dispatch(signInFailure(data.message));
+        return;
+      }
+      dispatch(signInSuccess(data));
       navigate('/');
     } catch (error) {
-      dispatch(signInFailure(error.message))
+      dispatch(signInFailure(error.message));
     }
- }
-  
+  };
 
   return (
-    <div className='p-3 max-w-lg mx-auto bg-slate-300 mt-6'>
-      <h1 className='text-3xl text-center font-semibold my-7'>Sing In</h1>
+    <div className="p-6 max-w-lg mx-auto bg-white shadow-lg rounded-lg mt-12 border border-gray-200">
+      <h1 className="text-3xl text-center font-bold text-gray-800 mb-6">Sign In</h1>
 
-      <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-        <input type="email" placeholder="email" className="border p-3 rounded-lg" id='email' onChange={handlChange}/>
-        <input type="password" placeholder="password" className="border p-3 rounded-lg" id='password' onChange={handlChange}/>
-        <button disabled={loading} className='bg-slate-700 text-white p-3 font-bold rounded-lg uppercase hover:opacity-80 disabled:opacity-80' >
-         {loading ? "loading...":'Sign In'}
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+        <div className="relative">
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full p-4 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            id="email"
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="relative">
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-full p-4 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            id="password"
+            onChange={handleChange}
+          />
+        </div>
+
+        <button
+          disabled={loading}
+          className="w-full p-4 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition disabled:opacity-60"
+        >
+          {loading ? 'Signing In...' : 'Sign In'}
         </button>
-        <GoogleAuth/>
+
+        <div className="mt-4">
+          <GoogleAuth/>
+        </div>
       </form>
 
-      <div className='flex gp-2 mt-5'>
-        <p className='text-center text-gray-500'>Dont have an account? </p>
-        <Link to="/signup">
-        <span className='text-blue-800'> Sign Up</span>
+      <div className="text-center mt-6 text-sm text-gray-600">
+        <p>Don't have an account?</p>
+        <Link to="/signup" className="text-indigo-600 hover:text-indigo-800 font-semibold">
+          Sign Up
         </Link>
       </div>
-      {errors && <p className='text-red-600 mt-5'>{errors}</p>}
-    </div>
-    
-  )
-}
 
-export default SignIn
+      {errors && <p className="text-red-600 text-center mt-4">{errors}</p>}
+    </div>
+  );
+};
+
+export default SignIn;

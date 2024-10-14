@@ -1,38 +1,35 @@
-import React from 'react'
-import { Link,useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import GoogleAuth from './component/GoogleAuth';
 
 const SignUp = () => {
-
   const [formaData, setFormData] = useState({});
   const [errors, setErrors] = useState();
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handlChange=(e)=>{
-    setFormData({...formaData, [e.target.id]: e.target.value});
-  }
-  console.log(formaData);
+  const handlChange = (e) => {
+    setFormData({ ...formaData, [e.target.id]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true)
+      setLoading(true);
       const response = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-          body: JSON.stringify(formaData),
+        body: JSON.stringify(formaData),
       });
-          const data = await response.json();
-          console.log(data);
-          if(data.success === false){
-            setErrors(data.message);
-            setLoading(false);
-            return
-          }
+      const data = await response.json();
+      if (data.success === false) {
+        setErrors(data.message);
+        setLoading(false);
+        return;
+      }
       setLoading(false);
       setErrors(null);
       navigate('/signin');
@@ -40,33 +37,52 @@ const SignUp = () => {
       setLoading(false);
       setErrors(data.message);
     }
- }
-  
+  };
 
   return (
-    <div className='p-3 max-w-lg mx-auto bg-slate-300 mt-6'>
-      <h1 className='text-3xl text-center font-semibold my-7'>Sing Up</h1>
+    <div className="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-lg p-6">
+      <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Sign Up</h1>
 
-      <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-        <input type="text" placeholder="username" className="border p-3 rounded-lg" id='username' onChange={handlChange}/>
-        <input type="email" placeholder="email" className="border p-3 rounded-lg" id='email' onChange={handlChange}/>
-        <input type="password" placeholder="password" className="border p-3 rounded-lg" id='password' onChange={handlChange}/>
-        <button disabled={loading} className='bg-slate-700 text-white p-3 font-bold rounded-lg uppercase hover:opacity-80 disabled:opacity-80' >
-         {loading ? "loading...":'Sign up'}
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+        <input
+          type="text"
+          placeholder="Username"
+          className="w-full border p-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          id="username"
+          onChange={handlChange}
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          className="w-full border p-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          id="email"
+          onChange={handlChange}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          className="w-full border p-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          id="password"
+          onChange={handlChange}
+        />
+        <button
+          disabled={loading}
+          className="bg-green-600 text-white p-4 font-bold rounded-lg hover:bg-green-700 disabled:opacity-60"
+        >
+          {loading ? 'Loading...' : 'Sign Up'}
         </button>
-        <GoogleAuth/>
+        <GoogleAuth />
       </form>
 
-      <div className='flex gp-2 mt-5'>
-        <p className='text-center text-gray-500'>Already have an account? </p>
-        <Link to="/signin">
-        <span className='text-blue-800'> Sign in</span>
-        </Link>
+      <div className="text-center mt-6">
+        <p className="text-gray-600">Already have an account?{' '}
+          <Link to="/signin" className="text-indigo-600 hover:underline">Sign in</Link>
+        </p>
       </div>
-      {errors && <p className='text-red-600 mt-5'>{errors}</p>}
-    </div>
-    
-  )
-}
 
-export default SignUp
+      {errors && <p className="text-red-600 mt-4 text-center">{errors}</p>}
+    </div>
+  );
+};
+
+export default SignUp;
