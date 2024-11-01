@@ -99,6 +99,7 @@ const CreateListing = () => {
         body: JSON.stringify({
           ...formData,
           userRef: currentUser._id,
+          user: currentUser._id,
         }),
       });
       const data = await res.json();

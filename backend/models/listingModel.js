@@ -1,7 +1,35 @@
 import mongoose from "mongoose";
 
+const reviewSchema=mongoose.Schema({
+    user:{
+        type:mongoose.Schema.Types.ObjectId,
+        required:true,
+        ref:"User",
+    },
+    name:{
+        type:String,
+        required:true,
+    },
+    comment:{
+        type:String,
+        required:true,
+    },
+    avatar:{
+        type:String,
+        default:"https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=",
+    },
+    
+},{
+    timestamps:true,
+})
+
 const listingSchema = new mongoose.Schema(
     {
+        user:{
+            type:mongoose.Schema.Types.ObjectId,
+            required:true,
+            ref:"User",
+        },
         name:{
             type:String,
             required:true
@@ -14,7 +42,7 @@ const listingSchema = new mongoose.Schema(
             type:Number,
             required:true
         },
-        quintity:{
+        quantity:{
             type:Number,
             required:true
         },
@@ -36,7 +64,8 @@ const listingSchema = new mongoose.Schema(
         offer:{
             type:Boolean,
             default:false
-        }
+        },
+        reviews:[reviewSchema]
 
     },{timestamps:true}
 )

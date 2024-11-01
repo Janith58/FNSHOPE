@@ -161,7 +161,7 @@ const Profile = () => {
           onClick={() => fileRef.current.click()}
           src={formData.avatar || currentUser.avatar}
           alt='profile'
-          className='rounded-full self-center h-24 w-24 object-cover cursor-pointer mt-2 border-2 border-gray-300 hover:border-gray-500 transition duration-300'
+          className='rounded-full self-center h-24 w-24 object-cover cursor-pointer mt-2 border-2 border-gray-300 hover:border-gray-500 transition duration-300 ring-2 ring-gray-300 dark:ring-green-700'
         />
 
         <p className='text-sm self-center'>

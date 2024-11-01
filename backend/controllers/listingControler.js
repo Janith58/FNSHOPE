@@ -98,3 +98,32 @@ export const searchListing = async (req,res,next) =>{
    }
 
 } 
+
+export const sendReview = async (req, res, next) => {
+   try {
+      console.log(req.body)
+       const { comment,user,name,avatar} = req.body;
+       if (!comment) {
+           return res.status(400).json({ message: 'Comment is required' });
+       }
+       const listing = await Listing.findById(req.params.id);
+       if (!listing) {
+           return res.status(404).json({ message: 'Listing not found' });
+       }
+       const review = {
+           name: req.body.name, 
+           comment,
+           user: req.body.user,
+           avatar:req.body.avatar     
+       };
+       console.log(user)
+       listing.reviews.push(review);
+       await listing.save();
+       res.status(201).json({ message: 'Review added',comment,user,name});
+   } catch (error) {
+       console.error(error);
+       res.status(500).json({ success: false, statusCode: 500, message: error.message });
+   }
+};
+
+

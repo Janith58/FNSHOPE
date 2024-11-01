@@ -75,13 +75,17 @@ const Header = () => {
               </li>
             )}
           </Link>
-          <Link to='/profile'>
+          <Link to='/profile' className='relative ' >
             {currentUser ? (
+              <>
               <img 
-                className='rounded-full h-9 w-9 object-cover border-2 border-green-500'
+                className='rounded-full h-9 w-9 object-cover border-2 border-green-500 '
                 src={currentUser.avatar} 
                 alt='profile' 
               />
+              <span className="top-0 left-7 absolute w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full"></span>
+
+              </>
             ) : (
               <li className='hidden sm:inline text-white hover:text-green-500 transition duration-300'>
                 Sign in

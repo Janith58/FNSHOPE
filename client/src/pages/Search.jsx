@@ -118,7 +118,7 @@ const Search = () => {
           role="dialog"
           aria-modal="true"
         >
-          <div className='p-2 bg-green-500 text-center'>
+          <div className='p-1 bg-green-700 text-center rounded-lg self-center'>
             <h5 className="mb-6 text-base font-semibold text-white uppercase self-center">More Search</h5>
           </div>
           <button
@@ -213,8 +213,8 @@ const Search = () => {
           </form>
         </div>
       )}
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-8 bg-slate-50">
+      <section className='container mx-auto py-14 p-12'>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-8">
         {!loading && listing.length === 0 && (
           <div className="col-span-full flex justify-center">
             <p className="text-2xl text-slate-700 font-semibold">No listings found</p>
@@ -230,6 +230,7 @@ const Search = () => {
         ))}
         
       </div>
+    </section>
       {showMore && (
           <button onClick={()=>{
             onShowMoreClick()
