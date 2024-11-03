@@ -12,6 +12,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@paypal/react-paypal-js": "^8.7.0",
     "@reduxjs/toolkit": "^2.2.7",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
