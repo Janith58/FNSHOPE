@@ -3,17 +3,16 @@ import { errorHandler } from "../utils/error.js";
 
 export const createOrder = async (req, res, next) => {
   try {
-    console.log(req.body)
-    const { items, shippingAddress, paymentMethod, totalAmount } = req.body;
+
+    const { items, shippingAddress, paymentMethod, totalAmount,name} = req.body;
     const order = new Order({
       user: req.user.id,
       items,
       totalAmount,
       shippingAddress,
       paymentMethod,
+      name,
     });
-   
-
     const createdOrder = await order.save();
     return res.status(201).json(createdOrder);
   } catch (error) {
@@ -23,8 +22,9 @@ export const createOrder = async (req, res, next) => {
 
 export const getOrder = async (req, res, next) => {
   try {
-    const order = await Order.findById(req.params.id).populate("user", "name email");
+    const order = await Order.find({user:req.params.id}).populate("user", "name email");
     if (!order) return next(errorHandler(404, "Order not found"));
+   
     return res.status(200).json(order);
   } catch (error) {
     next(error);

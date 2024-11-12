@@ -140,7 +140,6 @@ const CreateListing = () => {
           <textarea onChange={handleChange} value={formData.description} type='text' placeholder='Description' className='border p-3 rounded-lg' id='description' required/>
           <input onChange={handleChange} value={formData.price} type='number' placeholder='price' className='border p-3 rounded-lg' id='price' required/>
           <input onChange={handleChange} value={formData.quintity} type='number' placeholder='Count in stock' className='border p-3 rounded-lg' id='quintity' required/>
-          <input onChange={handleChange} value={formData.quintity} type='number' placeholder='Count in stock' className='border p-3 rounded-lg' id='quintity' required/>
           <input onChange={handleChange} value={formData.brand} type='text' placeholder='Brand' className='border p-3 rounded-lg' id='brand' />
           <select
             id="category"

@@ -14,7 +14,7 @@ export default function ListingItem({ listing }) {
         </div>
         <div className="p-4 flex flex-col justify-between h-[calc(100%-220px)]">
           <h5 className="text-xl font-semibold text-gray-900 truncate">
-            {listing.description || 'Description'}
+            {listing.name || 'Description'}
           </h5>
           <p className="mt-2 text-sm text-gray-700 dark:text-gray-400 line-clamp-2">
             {listing.description ||

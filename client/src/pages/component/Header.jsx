@@ -24,9 +24,9 @@ const Header = () => {
       setSearchTerms(searchTerm); 
     }
   }, [location.search]); 
-
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <header className='bg-slate-700 shadow-lg'>
+    <header className='bg-slate-700 shadow-lg '>
       <div className='flex justify-between items-center max-w-7xl mx-auto px-4 py-3'>
         {/* Brand Logo */}
         <Link to='/'>
@@ -71,11 +71,71 @@ const Header = () => {
           <Link to='/create_listing'>
             {currentUser && (
               <li className='hidden sm:inline text-white hover:text-green-400 transition duration-300'>
-                Listing
+                Start Sellin
               </li>
             )}
           </Link>
-          <Link to='/profile' className='relative ' >
+          <button>
+          {currentUser && (
+              <li className='hidden sm:inline text-white hover:text-green-400 transition duration-300'>
+               <div
+                  className="relative inline-block text-left"
+                  onMouseEnter={() => setIsOpen(true)}
+                  onMouseLeave={() => setIsOpen(false)}
+                >
+                  <span
+                    className="hidden sm:inline text-white hover:text-green-400 transition duration-300"
+                  >
+                    My Acount
+
+                  </span>
+
+                  {/* Dropdown Menu */}
+                  {isOpen && (
+                    <div
+                      className="z-10 absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+                    >
+                      <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
+                        <li>
+                          <a
+                            href="/profile"
+                            className=" hover:text-green-400 block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+                          >
+                            My Profile
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="/OrderListing"
+                            className=" hover:text-green-400 block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+                          >
+                            Order List
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className=" hover:text-green-400 block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+                          >
+                            Earnings
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className=" hover:text-green-400 block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 "
+                          >
+                            Sign out
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </li>
+            )}
+          </button>
+          <Link className='relative ' >
             {currentUser ? (
               <>
               <img 

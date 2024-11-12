@@ -126,11 +126,12 @@ const CreateListing = () => {
           <input onChange={handleChange} value={formData.quantity} type='number' placeholder='Count in Stock' className='border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500' id='quantity' required />
           <input onChange={handleChange} value={formData.brand} type='text' placeholder='Brand' className='border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500' id='brand' />
           <select id="category" value={formData.category} onChange={handleChange} className="border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
-            <option value="">Choose a Category</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Clothing">Clothing</option>
-            <option value="Home">Home</option>
-            <option value="Sports">Sports</option>
+                <option value="">Select category</option>
+                <option value="textile">Textile Crafts</option>
+                <option value="pottery">Pottery and Ceramics</option>
+                <option value="jewelry">Jewelry Making</option>
+                <option value="wood">Wood Crafts</option>
+                <option value="glass">Glass Crafts</option>
           </select>
           <div className="flex items-center gap-3">
             <input type="checkbox" id="offer" className="w-5 h-5" onChange={handleChange} />

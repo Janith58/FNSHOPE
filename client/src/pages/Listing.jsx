@@ -99,7 +99,7 @@ const Listing = () => {
       {loading && <p className="text-center my-7 text-2xl">Loading...</p>}
       {error && <p className="text-center my-7 text-2xl">Something went wrong!</p>}
       {listing && !loading && !error && (
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Image Section */}
           <section className="lg:col-span-2 flex flex-col rounded-lg overflow-hidden bg-white shadow-lg">
             <div className="rounded-lg overflow-hidden shadow-lg">
@@ -123,42 +123,25 @@ const Listing = () => {
           </section>
 
           {/* Details Section */}
-          <section className="p-6 bg-white rounded-lg shadow-md flex flex-col space-y-4">
+          <section className="p-6 bg-white rounded-lg shadow-md flex flex-col h-full space-y-4">
             <h2 className="text-2xl font-semibold text-gray-800">{listing.name ?? 'N/A'}</h2>
             <p className="text-xl text-green-600 font-bold">Price: ${listing.price ?? 'N/A'}</p>
             <p className="text-gray-600">Quantity: {listing.quantity ?? 'N/A'}</p>
-            <p className="text-gray-600 leading-relaxed">{listing.description ?? 'N/A'}</p>
+            <p className="text-gray-600 leading-relaxed flex-grow">{listing.description ?? 'N/A'}</p> {/* Add flex-grow to make this element fill space */}
+            
+            <div className="mt-auto"> {/* Use mt-auto to push the button to the bottom */}
+              <button 
+                onClick={handleOrder}
+                className="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-3 transition-all duration-200"
+              >
+                Place Order
+              </button>
+            </div>
           </section>
 
-          {/* Order Functionality Section */}
-          <section className="p-6 bg-white rounded-lg shadow-md flex flex-col items-center">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">Order This Item</h3>
-            {listing.quantity > 0 && (
-              <div className="mb-4 w-full">
-                <label className="text-gray-700">Select Quantity:</label>
-                <select
-                  className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
-                  value={qty}
-                  onChange={(e) => setQty(Number(e.target.value))}
-                >
-                  {[...Array(listing.quantity).keys()].map((x) => (
-                    <option key={x + 1} value={x + 1}>
-                      {x + 1}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
-            <button
-              onClick={handleOrder}
-              className="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-3 transition-all duration-200"
-            >
-              Place Order
-            </button>
-          </section>
 
           {/* Comment Section */}
-          <section className="p-6 bg-white rounded-lg shadow-md lg:col-span-4">
+          <section className="p-6 bg-white rounded-lg shadow-md lg:col-span-2">
             <h3 className="text-xl font-semibold text-gray-800 mb-4">Comments</h3>
 
             {commentError && <p className="text-red-500">Failed to load comments</p>}
@@ -185,7 +168,7 @@ const Listing = () => {
             )}
 
             {/* New Comment Form */}
-            <form onSubmit={handleCommentSubmit} className="mt-6 flex flex-col space-y-4">
+            <form onSubmit={handleCommentSubmit} className="mt-6 flex flex-col space-y-4  ">
               <textarea
                 className="w-full border border-gray-300 rounded-lg p-4 text-gray-800 focus:outline-none focus:border-green-500 transition duration-200"
                 rows="4"

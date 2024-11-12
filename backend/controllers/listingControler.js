@@ -101,7 +101,6 @@ export const searchListing = async (req,res,next) =>{
 
 export const sendReview = async (req, res, next) => {
    try {
-      console.log(req.body)
        const { comment,user,name,avatar} = req.body;
        if (!comment) {
            return res.status(400).json({ message: 'Comment is required' });
