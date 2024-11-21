@@ -47,3 +47,23 @@ export const updateOrderStatus = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getOrderByProduct = async (req, res, next) => {
+  try {
+    const { productId } = req.params; 
+    console.log("janith  madushanka")
+    console.log(productId)
+    const orders = await Order.find({
+      "items.product": productId, 
+    }).populate("user", "name email") 
+      .populate("items.product", "name price"); 
+
+    if (!orders || orders.length === 0) {
+      return next(errorHandler(404, "No orders found for this product"));
+    }
+    
+    return res.status(200).json(orders); 
+  } catch (error) {
+    next(error); 
+  }
+};

@@ -114,15 +114,15 @@ const Header = () => {
                         </li>
                         <li>
                           <a
-                            href="#"
+                            href="/productListing"
                             className=" hover:text-green-400 block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
                           >
-                            Earnings
+                            product
                           </a>
                         </li>
                         <li>
                           <a
-                            href="#"
+                            href="orderDetails"
                             className=" hover:text-green-400 block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 "
                           >
                             Sign out
@@ -147,9 +147,11 @@ const Header = () => {
 
               </>
             ) : (
-              <li className='hidden sm:inline text-white hover:text-green-500 transition duration-300'>
-                Sign in
-              </li>
+              <Link to="/signin">
+                <li className="text-white hover:text-green-500 transition duration-300">
+                  Sign in
+                </li>
+              </Link>
             )}
           </Link>
         </ul>

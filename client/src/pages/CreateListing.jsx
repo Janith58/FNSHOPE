@@ -116,7 +116,7 @@ const CreateListing = () => {
   };
 
   return (
-    <main className='p-5 max-w-4xl mx-auto bg-white rounded-lg shadow-lg mt-10'>
+    <main className='p-5 max-w-4xl mx-auto bg-white rounded-lg shadow-lg mt-10 mb-10'>
       <h1 className='text-3xl font-bold text-center mb-8 text-gray-800'>Create a New Listing</h1>
       <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-8">
         <div className='flex flex-col gap-6 flex-1'>
